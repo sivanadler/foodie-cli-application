@@ -6,4 +6,5 @@ class CreateRestaurantsTable < ActiveRecord::Migration[5.0]
       t.string :cuisine
     end
   end
+  
 end
