@@ -80,5 +80,4 @@ class Restaurant < ActiveRecord::Base
 
     puts "Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}!"
   end
-
 end
