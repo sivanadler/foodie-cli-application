@@ -30,7 +30,7 @@ class Restaurant < ActiveRecord::Base
     new_restaurant
   end
 
-  def average_rating
+  def average_restaurant_rating
     ratings = []
     DishPost.all.map do |post|
       if post.restaurant_id == self.id
@@ -38,5 +38,30 @@ class Restaurant < ActiveRecord::Base
       end
     end
     ratings.inject{ |sum, a| sum + a}.to_f / ratings.size.to_f
+  end
+
+  def average_dish_rating(dish)
+    ratings = []
+    DishPost.all.map do |post|
+      if post.name == dish
+        ratings << post.rating
+      end
+    end
+    ratings.inject{ |sum, a| sum + a}.to_f / ratings.size.to_f
+  end
+
+  def top_rated_item
+    newArr = []
+    avg = nil
+    array_of_hashes = []
+    search = DishPost.where restaurant: self.id
+    search.each do |post|
+      avg = self.average_dish_rating(post.name)
+      newArr << [menu_item: post.name, rating: avg]
+      array_of_hashes = newArr.uniq.flatten
+    end
+    sorted = array_of_hashes.sort_by { |key, value| value }
+    answer = sorted.reverse[0].to_a
+    puts "#{answer[0][1]} is the top rated item. It's average rating is #{answer[1][1]}!"
   end
 end

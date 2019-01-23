@@ -47,4 +47,5 @@ class DishPost < ActiveRecord::Base
     puts "This field requires an number rating."
     new_post
   end
+
 end
