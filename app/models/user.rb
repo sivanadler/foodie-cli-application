@@ -21,4 +21,19 @@ class User < ActiveRecord::Base
     puts "This field is required. Please try again..."
     new_user
   end
+
+  def fav_food_posts
+    DishPost.where name: self.fav_food
+  end
+
+  def restaurant_with_fav_food
+    restaurant_list = self.fav_food_posts.pluck(:restaurant_id)
+    Restaurant.find(restaurant_list)
+  end
+
+  def search_for(food)
+    search = DishPost.where name: food
+    restaurant_list = search.pluck(:restaurant_id)
+    Restaurant.find(restaurant_list)
+  end
 end

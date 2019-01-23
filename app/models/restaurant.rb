@@ -18,7 +18,7 @@ class Restaurant < ActiveRecord::Base
     my_location = gets.chomp
     if my_location == ""
       error_message
-    else 
+    else
     self.create(name: restaurant_name, cuisine: my_rest_cuisine, location: my_location)
     end
     end
@@ -28,5 +28,15 @@ class Restaurant < ActiveRecord::Base
   def self.error_message
     puts "This field is required. Please try again."
     new_restaurant
+  end
+
+  def average_rating
+    ratings = []
+    DishPost.all.map do |post|
+      if post.restaurant_id == self.id
+        ratings << post.rating
+      end
+    end
+    ratings.inject{ |sum, a| sum + a}.to_f / ratings.size.to_f
   end
 end

@@ -16,6 +16,11 @@ class DishPost < ActiveRecord::Base
       error_message
     else
       find_by_my_rest = Restaurant.find_by name: my_rest
+    puts "What did you eat there?"
+    i_ate = gets.chomp
+    if i_ate == ""
+      error_message
+    else
     puts "Meal Description: "
     meal_desc = gets.chomp
     puts "If you could rate this meal from 1-10, what would you rate it?"
@@ -23,7 +28,8 @@ class DishPost < ActiveRecord::Base
     if my_rating == 0
       error_message_for_syntax
     else
-    self.create(name: meal_desc, rating: my_rating, restaurant_id: find_by_my_rest.id, user_id: find_by_my_name.id)
+    self.create(name: i_ate, rating: my_rating, restaurant_id: find_by_my_rest.id, user_id: find_by_my_name.id, meal_description: meal_desc)
+    end
     end
     end
     end
