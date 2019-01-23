@@ -36,4 +36,11 @@ class User < ActiveRecord::Base
     restaurant_list = search.pluck(:restaurant_id)
     Restaurant.find(restaurant_list)
   end
+
+  def search_for_best_rated(food)
+    search = DishPost.where name: food
+    sorted = search.sort_by(&:rating).reverse
+    restaurant_list = sorted.pluck(:restaurant_id)
+    Restaurant.find(restaurant_list)
+  end
 end

@@ -4,17 +4,17 @@ class Restaurant < ActiveRecord::Base
 
   def self.new_restaurant
     puts "Hey there!"
-    puts "What is your Restaurant name?"
+    puts "What was the Restaurant name?"
     restaurant_name = gets.chomp
     if restaurant_name == ""
       error_message
     else
-    puts "What cuisine?"
+    puts "What cuisine was it?"
     my_rest_cuisine = gets.chomp
     if my_rest_cuisine == ""
       error_message
     else
-    puts "Where you at?"
+    puts "Where was it?"
     my_location = gets.chomp
     if my_location == ""
       error_message

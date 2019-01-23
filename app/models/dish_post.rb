@@ -16,6 +16,9 @@ class DishPost < ActiveRecord::Base
       error_message
     else
       find_by_my_rest = Restaurant.find_by name: my_rest
+      if find_by_my_rest == nil
+        find_by_my_rest = Restaurant.new_restaurant
+      end
     puts "What did you eat there?"
     i_ate = gets.chomp
     if i_ate == ""
