@@ -50,7 +50,7 @@ class Restaurant < ActiveRecord::Base
     ratings.inject{ |sum, a| sum + a}.to_f / ratings.size.to_f
   end
 
-  def top_rated_item
+  def raw_rating_data_helper
     newArr = []
     avg = nil
     array_of_hashes = []
@@ -60,8 +60,25 @@ class Restaurant < ActiveRecord::Base
       newArr << [menu_item: post.name, rating: avg]
       array_of_hashes = newArr.uniq.flatten
     end
-    sorted = array_of_hashes.sort_by { |key, value| value }
-    answer = sorted.reverse[0].to_a
-    puts "#{answer[0][1]} is the top rated item. It's average rating is #{answer[1][1]}!"
+    array_of_hashes
   end
+
+  def find_items_and_ratings
+    array_of_hashes = self.raw_rating_data_helper
+    sorted = array_of_hashes.sort_by { |key, value| value }
+    answer = sorted.to_a
+    item_ratings = answer.map do |item|
+      "-#{item[:menu_item]}, Rating: #{item[:rating]}"
+    end
+    puts item_ratings
+  end
+
+  def top_rated_item
+    array_of_hashes = self.raw_rating_data_helper
+    sorted = array_of_hashes.sort_by { |key, value| value }
+    answer = sorted.reverse[0]
+
+    puts "Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}!"
+  end
+
 end
