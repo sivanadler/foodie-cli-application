@@ -7,5 +7,4 @@ class CreateDishPostTable < ActiveRecord::Migration[5.0]
       t.integer :user_id
     end
   end
-  
 end

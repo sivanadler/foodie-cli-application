@@ -6,5 +6,4 @@ class CreateUsersTable < ActiveRecord::Migration[5.0]
       t.string :fav_cuisine
     end
   end
-
 end#end of class
