@@ -1,14 +1,32 @@
 class CommandLineInterface
 
   def greet
+    font = TTY::Font.new(:starwars)
+    pastel = Pastel.new
+    puts pastel.magenta(font.write("FOODIE"))
     puts 'Welcome to Foodie, the best app for restaurant searching your fav foods and restaurants!!'
   end
 
+  def greet_menu
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    user_input = prompt.select("~~~~~~~~~~~~ HOME ~~~~~~~~~~~~") do |menu|
+      menu.choice name: 'Sign In',  value: 1
+      menu.choice name: 'Create Account', value: 2
+    end
+    if user_input == 1
+      sign_in
+    elsif user_input == 2
+      create_profile
+    end
+  end
+
   def sign_in
-    puts "Enter Username:"
-    @user = gets.chomp
-    puts "Hey #{@user}! Welcome back!"
-    @user
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    user_name = prompt.ask("Enter Username:") do |q|
+      q.required true
+    end
+    @user = user_name
+    search_for
   end
 
   def search_for
@@ -17,6 +35,8 @@ class CommandLineInterface
       my_db << user.name
     end
     if my_db.include?(@user)
+      puts "Hey #{@user}! Welcome back!"
+      @user
       main_menu
     else
       create_profile
@@ -26,61 +46,68 @@ class CommandLineInterface
 
   def create_profile
     new_user = User.new_user
+    puts "Welcome #{new_user.name}!"
     main_menu
     return "done"
   end
 
   def main_menu
-    puts "*** MAIN MENU ***"
-    puts "Enter 1 to create a new post. Enter 2 to search existing posts:"
-    user_input = gets.chomp
-    if user_input == "1"
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    user_input = prompt.select("~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~") do |menu|
+      menu.choice name: 'New Post',  value: 1
+      menu.choice name: 'Search App', value: 2
+    end
+    if user_input == 1
       create_new_post
-    elsif user_input == "2"
+    elsif user_input == 2
       search_db
-    else
-      puts "Wrong input. Please input '1' or '2' to continue."
-      main_menu
     end
   end
 
   def create_new_post
     new_post = DishPost.new_post(@user)
-    return "nice post!"
+    puts "Your post has been saved!"
+    done_with_whatever
   end
 
   def search_db
-    puts " ******* Enter 1 to find restaurants with your fav food ******* "
-    puts " ******* Enter 2 to find posts about a specific food ******* "
-    puts " ******* Enter 3 to find restaurants with a specific food ******* "
-    puts " ******* Enter 4 to see all posts about a specific restaurant ******* "
-    puts " ******* Enter 5 to find the top rated item at a specific restaurant ******* "
-    user_input = gets.chomp
-    if user_input == "1"
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    user_input = prompt.select("~~~~~~~~~~~~ SEARCH ~~~~~~~~~~~~") do |menu|
+      menu.choice name: 'Restaurants with your fav food',  value: 1
+      menu.choice name: 'Search for posts by food', value: 2
+      menu.choice name: 'Search for restaurants by food', value: 3
+      menu.choice name: 'Review posts by restaurant', value: 4
+      menu.choice name: 'Find top rated item at a restaurant', value: 5
+      menu.choice name: 'Search for restaurants by cuisine', value: 6
+    end
+    if user_input == 1
       grab_user_instance.restaurant_with_fav_food
       done_with_whatever
-    elsif user_input == "2"
+    elsif user_input == 2
       puts "Enter food item:"
       food = gets.chomp
       grab_user_instance.get_food_posts(food)
       done_with_whatever
-    elsif user_input == "3"
+    elsif user_input == 3
       puts "Enter food item:"
       food = gets.chomp
       grab_user_instance.search_for(food)
       done_with_whatever
-    elsif user_input == "4"
+    elsif user_input == 4
       puts "Enter restaurant:"
       restaurant = gets.chomp
       grab_user_instance.get_restaurant_posts(restaurant)
       done_with_whatever
-    elsif user_input == "5"
+    elsif user_input == 5
       puts "Enter Restaurant:"
       @restaurant = gets.chomp
       grab_rest_instance.top_rated_item
       done_with_whatever
-    else
-      puts "Wrong input. Please input a number between 1 and 5 to continue."
+    elsif user_input == 6
+      puts "Enter Cuisine:"
+      cuisine = gets.chomp
+      Restaurant.get_cuisine_posts(cuisine)
+      done_with_whatever
     end
   end
 
@@ -95,12 +122,17 @@ class CommandLineInterface
   end
 
   def done_with_whatever
-    puts "Main Menu? Y/N"
-    yes_or_no = gets.chomp
-    if yes_or_no == "Y"
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    user_input = prompt.select("~~~~~~~~~~~~ DONE ~~~~~~~~~~~~") do |menu|
+      menu.choice name: 'Back to Main Menu?',  value: 1
+      menu.choice name: 'Exit', value: 2
+    end
+    if user_input == 1
       main_menu
+    elsif user_input == 2
+      puts "Bye Bye!"
     else
-      puts "Have a great day!!"
+      puts "~~~~~~~~~~~~bye~~~~~~~~~~~~"
     end
   end
 

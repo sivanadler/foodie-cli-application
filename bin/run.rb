@@ -1,10 +1,11 @@
 require_relative '../config/environment'
 require 'pry'
+prompt = TTY::Prompt.new
 
 cli = CommandLineInterface.new
 cli.greet
-@user = cli.sign_in
-cli.search_for
+cli.greet_menu
+
 
 binding.pry
-puts "HELLO WORLD"
+puts "SEE YA"

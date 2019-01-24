@@ -80,4 +80,14 @@ class Restaurant < ActiveRecord::Base
 
     puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **"
   end
+
+  def self.get_cuisine_posts(cuisine)
+    list_item = []
+    var = self.all.where cuisine: cuisine
+    var.each do |rest|
+      list_item << "** Restaurant: #{rest.name}, Location: #{rest.location}, Rating: #{rest.average_restaurant_rating}, "
+    end
+    puts "Restaurants that serve #{cuisine} food:"
+    puts list_item
+  end
 end

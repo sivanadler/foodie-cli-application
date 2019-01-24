@@ -17,17 +17,14 @@ class DishPost < ActiveRecord::Base
       end
     end
     puts "What did you eat there?"
-    i_ate = gets.chomp
+    i_ate = gets.chomp.pluralize
     if i_ate == ""
       error_message
     end
     puts "Meal Description: "
     meal_desc = gets.chomp
-    puts "If you could rate this meal from 1-10, what would you rate it?"
-    my_rating = gets.to_i
-    if my_rating == 0
-      error_message_for_syntax
-    end
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    my_rating = prompt.slider('Rating:', max: 10, step: 1)
     self.create(name: i_ate, rating: my_rating, restaurant_id: find_by_my_rest.id, user_id: find_by_my_name.id, meal_description: meal_desc)
   end
 
@@ -36,9 +33,5 @@ class DishPost < ActiveRecord::Base
     new_post(@my_name)
   end
 
-  def self.error_message_for_syntax
-    puts "This field requires an number rating. Please enter a number between 1 and 10."
-    new_post(@my_name)
-  end
 
 end
