@@ -1,4 +1,4 @@
-##Foodie: A Super Original App
+## Foodie: A Super Original App
 Mod 1 Final Project
 
 ## INSTALL
