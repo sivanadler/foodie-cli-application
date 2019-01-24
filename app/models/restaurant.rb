@@ -68,7 +68,7 @@ class Restaurant < ActiveRecord::Base
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.to_a
     item_ratings = answer.map do |item|
-      "-#{item[:menu_item]}, Rating: #{item[:rating]}"
+      "** #{item[:menu_item]}, Rating: #{item[:rating]}"
     end
     puts item_ratings
   end
@@ -78,6 +78,6 @@ class Restaurant < ActiveRecord::Base
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.reverse[0]
 
-    puts "Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}!"
+    puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **"
   end
 end

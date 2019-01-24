@@ -1,10 +1,5 @@
 class CommandLineInterface
 
-  @user = User.new
-  @restaurant = Restaurant.new
-  @dish_post = DishPost.new
-  # binding.pry
-
   def greet
     puts 'Welcome to Foodie, the best app for restaurant searching your fav foods and restaurants!!'
   end
@@ -63,10 +58,27 @@ class CommandLineInterface
     user_input = gets.chomp
     if user_input == "1"
       grab_user_instance.restaurant_with_fav_food
+      done_with_whatever
     elsif user_input == "2"
+      puts "Enter food item:"
+      food = gets.chomp
+      grab_user_instance.get_food_posts(food)
+      done_with_whatever
     elsif user_input == "3"
+      puts "Enter food item:"
+      food = gets.chomp
+      grab_user_instance.search_for(food)
+      done_with_whatever
     elsif user_input == "4"
+      puts "Enter restaurant:"
+      restaurant = gets.chomp
+      grab_user_instance.get_restaurant_posts(restaurant)
+      done_with_whatever
     elsif user_input == "5"
+      puts "Enter Restaurant:"
+      @restaurant = gets.chomp
+      grab_rest_instance.top_rated_item
+      done_with_whatever
     else
       puts "Wrong input. Please input a number between 1 and 5 to continue."
     end
@@ -77,8 +89,19 @@ class CommandLineInterface
     @user_instance
   end
 
-  # def users_fav_food_posts
-  #   @name
-  # end
+  def grab_rest_instance
+    @rest_instance = Restaurant.find_by name: @restaurant
+    @rest_instance
+  end
+
+  def done_with_whatever
+    puts "Main Menu? Y/N"
+    yes_or_no = gets.chomp
+    if yes_or_no == "Y"
+      main_menu
+    else
+      puts "Have a great day!!"
+    end
+  end
 
 end #end of class
