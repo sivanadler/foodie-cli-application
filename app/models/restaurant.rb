@@ -3,7 +3,7 @@ class Restaurant < ActiveRecord::Base
   has_many :users, through: :dish_posts
 
   def self.new_restaurant
-    puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)"
+    puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)".blue
     puts "Restaurant name:"
     restaurant_name = gets.chomp
     if restaurant_name == ""
@@ -68,7 +68,7 @@ class Restaurant < ActiveRecord::Base
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.to_a
     item_ratings = answer.map do |item|
-      "** #{item[:menu_item]}, Rating: #{item[:rating]}"
+      "** #{item[:menu_item]}, Rating: #{item[:rating]}".green
     end
     puts item_ratings
   end
@@ -78,16 +78,16 @@ class Restaurant < ActiveRecord::Base
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.reverse[0]
 
-    puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **"
+    puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **".green
   end
 
   def self.get_cuisine_posts(cuisine)
     list_item = []
     var = self.all.where cuisine: cuisine
     var.each do |rest|
-      list_item << "** Restaurant: #{rest.name}, Location: #{rest.location}, Rating: #{rest.average_restaurant_rating}, "
+      list_item << "** Restaurant: #{rest.name}, Location: #{rest.location}, Rating: #{rest.average_restaurant_rating}".green
     end
-    puts "Restaurants that serve #{cuisine} food:"
+    puts "Restaurants that serve #{cuisine} food:".green
     puts list_item
   end
 end

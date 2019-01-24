@@ -4,12 +4,12 @@ class CommandLineInterface
     font = TTY::Font.new(:starwars)
     pastel = Pastel.new
     puts pastel.magenta(font.write("FOODIE"))
-    puts 'Welcome to Foodie, the best app for restaurant searching your fav foods and restaurants!!'
+    puts 'Welcome to Foodie, the best app for restaurant searching your fav foods and restaurants!! (and SUPER ORIGINAL!)'
   end
 
   def greet_menu
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ HOME ~~~~~~~~~~~~") do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~ HOME ~~~~~~~~~~~~".red) do |menu|
       menu.choice name: 'Sign In',  value: 1
       menu.choice name: 'Create Account', value: 2
     end
@@ -35,7 +35,7 @@ class CommandLineInterface
       my_db << user.name
     end
     if my_db.include?(@user)
-      puts "Hey #{@user}! Welcome back!"
+      puts "Hey #{@user}! Welcome back!".green
       @user
       main_menu
     else
@@ -46,14 +46,14 @@ class CommandLineInterface
 
   def create_profile
     new_user = User.new_user
-    puts "Welcome #{new_user.name}!"
+    puts "Welcome #{new_user.name}! Your account was created!".green
     main_menu
     return "done"
   end
 
   def main_menu
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~") do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~".red) do |menu|
       menu.choice name: 'New Post',  value: 1
       menu.choice name: 'Search App', value: 2
     end
@@ -66,13 +66,13 @@ class CommandLineInterface
 
   def create_new_post
     new_post = DishPost.new_post(@user)
-    puts "Your post has been saved!"
+    puts "Your post has been saved!".green
     done_with_whatever
   end
 
   def search_db
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ SEARCH ~~~~~~~~~~~~") do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~ SEARCH ~~~~~~~~~~~~".red) do |menu|
       menu.choice name: 'Restaurants with your fav food',  value: 1
       menu.choice name: 'Search for posts by food', value: 2
       menu.choice name: 'Search for restaurants by food', value: 3
@@ -123,16 +123,16 @@ class CommandLineInterface
 
   def done_with_whatever
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ DONE ~~~~~~~~~~~~") do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~ DONE ~~~~~~~~~~~~".red) do |menu|
       menu.choice name: 'Back to Main Menu?',  value: 1
       menu.choice name: 'Exit', value: 2
     end
     if user_input == 1
       main_menu
     elsif user_input == 2
-      puts "Bye Bye!"
+      puts "Bye Bye!".blue
     else
-      puts "~~~~~~~~~~~~bye~~~~~~~~~~~~"
+      puts "~~~~~~~~~~~~bye~~~~~~~~~~~~".red
     end
   end
 

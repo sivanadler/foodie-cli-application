@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :restaurants, through: :dish_posts
 
   def self.new_user
-    puts "Hey there! First time with us? Great! Register here. Don't worry, you'll only have to do this once..."
+    puts "Hey there! First time with us? Great! Register here. Don't worry, you'll only have to do this once...".blue
     prompt = TTY::Prompt.new(active_color: :magenta)
     user_name = prompt.ask("What is your name?") do |q|
       q.required true
@@ -17,16 +17,7 @@ class User < ActiveRecord::Base
 
   def fav_food_posts
     postsArr = DishPost.where name: self.fav_food
-    # binding.pry
-    # keyArr = ["name", "rating"]
-    # print_from_db(postsArr, keyArr)
   end
-
-# postsArr.each do |post|
-#   keyArr.each do |key|
-#     "#{key} - #{post[key]}"
-#   end
-# end
 
   def restaurant_with_fav_food
     newArr = []
@@ -42,13 +33,13 @@ class User < ActiveRecord::Base
       array_of_hashes = newArr.uniq.flatten
     end
     rest_list = array_of_hashes.map do |item|
-      "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}."
+      "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}.".green
     end
     if rest_list != []
-      puts "These restaurants have #{self.fav_food.pluralize}:"
+      puts "These restaurants have #{self.fav_food.pluralize}:".green
       puts rest_list
     elsif rest_list == []
-      puts "There are no posts about #{self.fav_food.pluralize}"
+      puts "There are no posts about #{self.fav_food.pluralize}".green
     end
   end
 
@@ -68,13 +59,13 @@ class User < ActiveRecord::Base
       array_of_hashes = newArr.uniq.flatten
     end
     rest_list = array_of_hashes.map do |item|
-      "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}."
+      "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}.".green
     end
     if rest_list != []
-      puts "These restaurants have #{food.pluralize}:"
+      puts "These restaurants have #{food.pluralize}:".green
       puts rest_list
     elsif rest_list == []
-      puts "There are no posts about #{food.pluralize}"
+      puts "There are no posts about #{food.pluralize}".green
     end
   end
 
@@ -85,13 +76,13 @@ class User < ActiveRecord::Base
     all.each do |post|
       rest = Restaurant.find_by id: post.restaurant_id
       user = User.find_by id: post.user_id
-      list_item << "** Item: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Restaurant: #{rest.name}, User: #{user.name}"
+      list_item << "** Item: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Restaurant: #{rest.name}, User: #{user.name}".green
     end
     if list_item != []
-      puts "These restaurants have #{food.pluralize}:"
+      puts "These restaurants have #{food.pluralize}:".green
       puts list_item
     elsif list_item == []
-      puts "There are no posts about #{food.pluralize}"
+      puts "There are no posts about #{food.pluralize}".green
     end
   end
 
@@ -102,17 +93,10 @@ class User < ActiveRecord::Base
     all.each do |post|
       rest = Restaurant.find_by id: post.restaurant_id
       user = User.find_by id: post.user_id
-      list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}"
+      list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}".green
     end
-    puts "Posts about #{restaurant}:"
+    puts "Posts about #{restaurant}:".green
     puts list_item
   end
 
-  def search_for_best_rated(food)
-    food = food.pluralize
-    search = DishPost.where name: food
-    sorted = search.sort_by(&:rating).reverse
-    restaurant_list = sorted.pluck(:restaurant_id)
-    Restaurant.find(restaurant_list)
-  end
-end
+end #end of class

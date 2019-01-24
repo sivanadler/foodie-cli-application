@@ -33,5 +33,4 @@ class DishPost < ActiveRecord::Base
     new_post(@my_name)
   end
 
-
-end
+end #end of class
