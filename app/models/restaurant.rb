@@ -3,26 +3,26 @@ class Restaurant < ActiveRecord::Base
   has_many :users, through: :dish_posts
 
   def self.new_restaurant
-    puts "Hey there!"
-    puts "What was the Restaurant name?"
+    puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)"
+    puts "Restaurant name:"
     restaurant_name = gets.chomp
     if restaurant_name == ""
       error_message
     else
-    puts "What cuisine was it?"
+    end
+    puts "Cuisine:"
     my_rest_cuisine = gets.chomp
     if my_rest_cuisine == ""
       error_message
     else
-    puts "Where was it?"
+    end
+    puts "Location:"
     my_location = gets.chomp
     if my_location == ""
       error_message
     else
+    end
     self.create(name: restaurant_name, cuisine: my_rest_cuisine, location: my_location)
-    end
-    end
-    end
   end
 
   def self.error_message

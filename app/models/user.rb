@@ -3,18 +3,18 @@ class User < ActiveRecord::Base
   has_many :restaurants, through: :dish_posts
 
   def self.new_user
-    puts "Hey there!"
-    puts "What is your name?"
+    puts "Hey there! First time with us? Great! Register here. Don't worry, you'll only have to do this once..."
+    puts "Create a username:"
     user_name = gets.chomp
     if user_name == ""
       error_message
     else
-    puts "Got a favorite food? Tell us!"
+    end
+    puts "Favorite Food:"
     my_fav_food = gets.chomp
-    puts "Favorite cuisine? Tell us!"
+    puts "Favorite cuisine:"
     my_fav_cuisine = gets.chomp
     self.create(name: user_name, fav_food: my_fav_food, fav_cuisine: my_fav_cuisine)
-    end
   end
 
   def self.error_message
@@ -23,12 +23,23 @@ class User < ActiveRecord::Base
   end
 
   def fav_food_posts
-    DishPost.where name: self.fav_food
+    postsArr = DishPost.where name: self.fav_food
   end
 
   def restaurant_with_fav_food
+    newArr = []
+    array_of_hashes = []
     restaurant_list = self.fav_food_posts.pluck(:restaurant_id)
-    Restaurant.find(restaurant_list)
+    rest_arr = Restaurant.find(restaurant_list)
+    rest_arr.each do |rest|
+      newArr << [restaurant_name: rest.name, location: rest.location]
+      array_of_hashes = newArr.uniq.flatten
+    binding.pry
+    end
+    rest_list = array_of_hashes.map do |item|
+      "-Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}"
+    end
+    puts rest_list
   end
 
   def search_for(food)
