@@ -2,7 +2,7 @@
 Mod 1 Final Project
 
 ## INSTALL
-In order to run this app, first clone down this repo to your local machine. Next, run 'bundle install' in your terminal.
+In order to run this app, first clone down this repo to your local machine. Next, run 'bundle install' in your terminal, then you need to create a database and populate it with some seed data. You can do this by running rake db:migrate and then rake db:seed in your terminal.
 
 ## DESCRIPTION
 Okay, you've got our gems and you've got our code. Now, let's get started. FOODIE is an app where you (a user) can post about food you LOVE (or HATE), write a description and rate what you ate. A user can also look up what/where to eat. When a user creates their profile, they save information like "Fav Food", which they can search by in this app to find restaurants that serve that item. There are many ways to search, you'll have to download the app to find out the rest!
