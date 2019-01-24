@@ -10,14 +10,12 @@ Okay, you've got our gems and you've got our code. Now, let's get started. FOODI
 ## INSTRUCTIONS
 1. In your command line, run 'ruby ./bin/run.rb'.
 2. Now you're on the home page. You can navigate the app with the arrow keys and select a field by hitting enter. Either sign in if you have an account, or feel free to create yourself an account.
-  - IF you're creating an account, answer some questions and Foodie will store your info in your profile.
-  - IF you've got an account, sign in... Foodie has your info!
+  - IF you're creating an account, answer some questions and Foodie will store your info in Foodie's database. Next time you use Foodie, just log in with your name.
+  - IF you've got an account, sign in with your name... Foodie's database has your info!
 3. Ok... now we're in! You're seeing the main menu. You've got two options. You can either create a new post (maybe you ate something awesome and want everyone to know) OR you can just search Foodie for suggestions on what/where to get lunch today.
-  - IF you're creating a new post, move to step 4
-  - IF you're searching, move to step 5
-4. To create a post, just answer some questions and your post will be saved!
-5. If you're searching the app, there's a lot you can search for. Navigate the search menu with the arrow keys to search for whatever you're in the mood for.
-6. Once you've finished a post or a search, you'll have the option to either continue back to the main menu, or just exit. Make your selection and enjoy!
+  - IF you're creating a new post, just answer some questions and your post will be saved!
+  - IF you're searching Foodie, there's a lot you can search for. Navigate the search menu with the arrow keys to search for whatever you're in the mood for.
+4. Once you've finished a post or a search, you'll have the option to either continue back to the main menu, or just exit. Make your selection and enjoy!
 
 ## CONTRIBUTORS GUIDE
 1. Fork and clone this repo

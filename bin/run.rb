@@ -8,4 +8,6 @@ cli.greet_menu
 
 
 binding.pry
-puts "SEE YA"
+font = TTY::Font.new(:starwars)
+pastel = Pastel.new
+puts pastel.magenta(font.write(" SEE  YA "))
