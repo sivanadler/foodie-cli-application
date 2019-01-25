@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
   def self.new_user
     puts "Hey there! First time with us? Great! Register here. Don't worry, you'll only have to do this once...".blue
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_name = prompt.ask("What is your name?") do |q|
+    user_name = prompt.ask("What is your name?".blue.bold) do |q|
       q.required true
     end
-    puts "Favorite Food:"
+    puts "Favorite Food:".blue.bold
     my_fav_food = gets.chomp.pluralize
-    puts "Favorite cuisine:"
+    puts "Favorite cuisine:".blue.bold
     my_fav_cuisine = gets.chomp
     self.create(name: user_name, fav_food: my_fav_food, fav_cuisine: my_fav_cuisine)
   end

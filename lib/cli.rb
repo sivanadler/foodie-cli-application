@@ -3,13 +3,13 @@ class CommandLineInterface
   def greet
     font = TTY::Font.new(:starwars)
     pastel = Pastel.new
-    puts pastel.magenta(font.write(" FOODIE "))
+    puts pastel.magenta.bold(font.write(" FOODIE "))
     puts 'Welcome to Foodie, the best app for restaurant searching your fav foods and restaurants!'.bold
   end
 
   def greet_menu
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ HOME ~~~~~~~~~~~~".cyan.bold) do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~~~~~~~~ HOME ~~~~~~~~~~~~~~~~~~~".cyan.bold) do |menu|
       menu.choice name: 'Sign In',  value: 1
       menu.choice name: 'Create Account', value: 2
     end
@@ -53,7 +53,7 @@ class CommandLineInterface
 
   def main_menu
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~".cyan.bold) do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~~~~~~~~ MAIN MENU ~~~~~~~~~~~~~~~~~~~".cyan.bold) do |menu|
       menu.choice name: 'New Post',  value: 1
       menu.choice name: 'Search App', value: 2
     end
@@ -74,7 +74,7 @@ class CommandLineInterface
 
   def search_db
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ SEARCH ~~~~~~~~~~~~".cyan.bold) do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~~~~~~~~ SEARCH ~~~~~~~~~~~~~~~~~~~".cyan.bold) do |menu|
       menu.choice name: 'Restaurants with your fav food',  value: 1
       menu.choice name: 'Search for posts by food', value: 2
       menu.choice name: 'Search for restaurants by food', value: 3
@@ -131,16 +131,14 @@ class CommandLineInterface
 
   def done_with_whatever
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_input = prompt.select("~~~~~~~~~~~~ DONE ~~~~~~~~~~~~".cyan.bold) do |menu|
+    user_input = prompt.select("~~~~~~~~~~~~~~~~~~~ DONE ~~~~~~~~~~~~~~~~~~~".cyan.bold) do |menu|
       menu.choice name: 'Back to Main Menu?',  value: 1
       menu.choice name: 'Exit', value: 2
     end
     if user_input == 1
       main_menu
     elsif user_input == 2
-      puts "Bye Bye!".blue
     else
-      puts "~~~~~~~~~~~~bye~~~~~~~~~~~~".cyan.bold
     end
   end
 
