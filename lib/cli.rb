@@ -22,7 +22,7 @@ class CommandLineInterface
 
   def sign_in
     prompt = TTY::Prompt.new(active_color: :magenta)
-    user_name = prompt.ask("Enter Username:") do |q|
+    user_name = prompt.ask("Enter Username:".bold) do |q|
       q.required true
     end
     @user = user_name
@@ -46,9 +46,9 @@ class CommandLineInterface
 
   def create_profile
     new_user = User.new_user
-    puts "Welcome #{new_user.name}! Your account was created!".green
-    main_menu
-    return "done"
+    @user = new_user
+    puts "Welcome #{new_user.name}! Your account was created! Please sign in using your username:".bold.green
+    sign_in
   end
 
   def main_menu
@@ -66,8 +66,6 @@ class CommandLineInterface
 
   def create_new_post
     new_post = DishPost.new_post(@user)
-    grab_rest_instance.new_post
-    binding.pry
     puts "Your post has been saved!".green
     done_with_whatever
   end
@@ -86,28 +84,28 @@ class CommandLineInterface
       grab_user_instance.restaurant_with_fav_food
       done_with_whatever
     elsif user_input == 2
-      puts "Enter food item:"
+      puts "Enter food item:".bold
       food = gets.chomp
       grab_user_instance.get_food_posts(food)
       done_with_whatever
     elsif user_input == 3
-      puts "Enter food item:"
+      puts "Enter food item:".bold
       food = gets.chomp
       grab_user_instance.search_for(food)
       done_with_whatever
     elsif user_input == 4
-      puts "Enter restaurant:"
+      puts "Enter restaurant:".bold
       @restaurant = gets.chomp
       grab_rest_instance
       Restaurant.get_restaurant_posts(@restaurant)
       done_with_whatever
     elsif user_input == 5
-      puts "Enter Restaurant:"
+      puts "Enter Restaurant:".bold
       @restaurant = gets.chomp
       grab_rest_instance.top_rated_item
       done_with_whatever
     elsif user_input == 6
-      puts "Enter Cuisine:"
+      puts "Enter Cuisine:".bold
       cuisine = gets.chomp
       Restaurant.get_cuisine_posts(cuisine)
       done_with_whatever
@@ -116,17 +114,21 @@ class CommandLineInterface
 
   def grab_user_instance
     @user_instance = User.find_by name: @user
-    @user_instance
+    # if @user_instance == nil
+    #   puts "There are no posts about this item.".bold.red
+    #   done_with_whatever
+    # else
+      @user_instance
   end
 
   def grab_rest_instance
     @rest_instance = Restaurant.find_by name: @restaurant
-    if @rest_instance == nil
-      puts "We are sorry this restaurant has no posts yet.".green
-      done_with_whatever
-    else
-    @rest_instance
-  end
+    # if @rest_instance == nil
+    #   puts "We are sorry this restaurant has no posts yet.".bold.red
+    #   done_with_whatever
+    # else
+      @rest_instance
+    # end
   end
 
   def done_with_whatever

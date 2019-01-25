@@ -22,4 +22,5 @@ d4 = DishPost.create(name: "Burritos", rating: 3, restaurant_id: chipotle.id, us
 d5 = DishPost.create(name: "Nachos", rating: 10, restaurant_id: chipotle.id, user_id: sivan.id, meal_description: "WOW")
 d6 = DishPost.create(name: "Pasta", rating: 10, restaurant_id: cheesecake.id, user_id: sivan.id, meal_description: "WOW")
 d7 = DishPost.create(name: "Pasta", rating: 10, restaurant_id: hillstone.id, user_id: sivan.id, meal_description: "WOW")
+d8 = DishPost.create(name: "Pizza", rating: 8, restaurant_id: bravo.id, user_id: zev.id, meal_description: "omg")
 # # DishPost.new(name: "Best Burgers", rating: 7, restaurant_id: , user_id: )

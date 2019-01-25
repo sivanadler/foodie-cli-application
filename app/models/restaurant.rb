@@ -4,21 +4,49 @@ class Restaurant < ActiveRecord::Base
 
   def self.new_restaurant
     puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)".blue
-    prompt = TTY::Prompt.new(active_color: :magenta)
-    restaurant_name = prompt.ask("Restaurant name:".blue.bold) do |q|
-      q.required true
+    puts "Restaurant name:".bold.blue
+    restaurant_name = gets.chomp
+    if restaurant_name == ""
+      error_message
+    else
     end
-    prompt = TTY::Prompt.new(active_color: :magenta)
-    my_rest_cuisine = prompt.ask("Cuisine:".blue.bold) do |q|
-      q.required true
+    puts "Cuisine:".bold.blue
+    my_rest_cuisine = gets.chomp
+    if my_rest_cuisine == ""
+      error_message
+    else
     end
-    prompt = TTY::Prompt.new(active_color: :magenta)
-    my_location = prompt.ask("Location:".blue.bold) do |q|
-      q.required true
+    puts "Location:".bold.blue
+    my_location = gets.chomp
+    if my_location == ""
+      error_message
+    else
     end
     self.create(name: restaurant_name, cuisine: my_rest_cuisine, location: my_location)
-    puts "Thanks! We've saved this restaurant. Continue with creating your post!".green
   end
+
+def self.error_message
+  puts "This field is required. Please try again.".red.bold
+  new_restaurant
+end
+
+  # def self.new_restaurant
+  #   puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)".blue
+  #   prompt = TTY::Prompt.new(active_color: :magenta)
+  #   restaurant_name = prompt.ask("Restaurant name:".blue.bold) do |q|
+  #     q.required true
+  #   end
+  #   prompt = TTY::Prompt.new(active_color: :magenta)
+  #   my_rest_cuisine = prompt.ask("Cuisine:".blue.bold) do |q|
+  #     q.required true
+  #   end
+  #   prompt = TTY::Prompt.new(active_color: :magenta)
+  #   my_location = prompt.ask("Location:".blue.bold) do |q|
+  #     q.required true
+  #   end
+  #   self.create(name: restaurant_name, cuisine: my_rest_cuisine, location: my_location)
+  #   puts "Thanks! We've saved this restaurant. Continue with creating your post!".green
+  # end
 
   def average_restaurant_rating
     ratings = []
@@ -58,7 +86,7 @@ class Restaurant < ActiveRecord::Base
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.to_a
     item_ratings = answer.map do |item|
-      "** #{item[:menu_item]}, Rating: #{item[:rating]}".green
+      "** #{item[:menu_item]}, Rating: #{item[:rating]}".bold.green
     end
     puts item_ratings
   end
@@ -67,7 +95,7 @@ class Restaurant < ActiveRecord::Base
     array_of_hashes = self.raw_rating_data_helper
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.reverse[0]
-    puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **".green
+    puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **".bold.green
   end
 
   def self.get_cuisine_posts(cuisine)
@@ -77,9 +105,9 @@ class Restaurant < ActiveRecord::Base
       list_item << "** Restaurant: #{rest.name}, Location: #{rest.location}, Rating: #{rest.average_restaurant_rating}".green
     end
     if list_item == []
-      puts "There are no posts about restaurants that serve #{cuisine} food yet.".red
+      puts "There are no posts about restaurants that serve #{cuisine} food yet.".bold.green
     elsif list_item
-      puts "Restaurants that serve #{cuisine} food:".green
+      puts "Restaurants that serve #{cuisine} food:".bold.green
       puts list_item
     end
   end
@@ -94,9 +122,9 @@ class Restaurant < ActiveRecord::Base
       list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}".green
     end
     if list_item == []
-      puts "There are no posts about #{restaurant} yet.".red
+      puts "There are no posts about #{restaurant} yet.".bold.green
     elsif  list_item
-      puts "Posts about #{restaurant}:".green
+      puts "Posts about #{restaurant}:".bold.green
       puts list_item
     end
   end

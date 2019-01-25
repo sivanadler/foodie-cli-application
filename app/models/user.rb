@@ -36,10 +36,10 @@ class User < ActiveRecord::Base
       "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}.".green
     end
     if rest_list != []
-      puts "These restaurants have #{self.fav_food.pluralize}:".green
+      puts "These restaurants have #{self.fav_food.pluralize}:".bold.green
       puts rest_list
     elsif rest_list == []
-      puts "There are no posts about #{self.fav_food.pluralize}".green
+      puts "There are no posts about #{self.fav_food.pluralize}".bold.green
     end
   end
 
@@ -62,10 +62,10 @@ class User < ActiveRecord::Base
       "** Restaurant: #{item[:restaurant_name]}, Location: #{item[:location]}, Average Restaurant Rating: #{item[:avg_rating]}.".green
     end
     if rest_list != []
-      puts "These restaurants have #{food.pluralize}:".green
+      puts "These restaurants have #{food.pluralize}:".bold.green
       puts rest_list
     elsif rest_list == []
-      puts "There are no posts about #{food.pluralize}".green
+      puts "There are no posts about #{food.pluralize}".bold.red
     end
   end
 
@@ -79,10 +79,10 @@ class User < ActiveRecord::Base
       list_item << "** Item: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Restaurant: #{rest.name}, User: #{user.name}".green
     end
     if list_item != []
-      puts "These restaurants have #{food.pluralize}:".green
+      puts "These posts are about #{food.pluralize}:".bold.green
       puts list_item
     elsif list_item == []
-      puts "There are no posts about #{food.pluralize}".green
+      puts "There are no posts about #{food.pluralize}".bold.red
     end
   end
 
