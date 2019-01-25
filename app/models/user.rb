@@ -86,17 +86,4 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_restaurant_posts(restaurant)
-    list_item = []
-    var = Restaurant.find_by name: restaurant
-    all = DishPost.all.where restaurant_id: var.id
-    all.each do |post|
-      rest = Restaurant.find_by id: post.restaurant_id
-      user = User.find_by id: post.user_id
-      list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}".green
-    end
-    puts "Posts about #{restaurant}:".green
-    puts list_item
-  end
-
 end #end of class

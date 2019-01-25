@@ -95,8 +95,8 @@ class CommandLineInterface
       done_with_whatever
     elsif user_input == 4
       puts "Enter restaurant:"
-      restaurant = gets.chomp
-      grab_user_instance.get_restaurant_posts(restaurant)
+      @restaurant = gets.chomp
+      grab_rest_instance.get_restaurant_posts
       done_with_whatever
     elsif user_input == 5
       puts "Enter Restaurant:"
@@ -118,7 +118,12 @@ class CommandLineInterface
 
   def grab_rest_instance
     @rest_instance = Restaurant.find_by name: @restaurant
+    if @rest_instance == nil
+      puts "We are sorry this restaurant has no posts yet.".green
+      done_with_whatever
+    else
     @rest_instance
+  end
   end
 
   def done_with_whatever
