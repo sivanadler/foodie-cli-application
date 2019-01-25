@@ -77,7 +77,6 @@ class Restaurant < ActiveRecord::Base
     array_of_hashes = self.raw_rating_data_helper
     sorted = array_of_hashes.sort_by { |key, value| value }
     answer = sorted.reverse[0]
-
     puts "** Top Rated Item: #{answer[:menu_item]}, Average Rating: #{answer[:rating]}! **".green
   end
 
@@ -90,4 +89,18 @@ class Restaurant < ActiveRecord::Base
     puts "Restaurants that serve #{cuisine} food:".green
     puts list_item
   end
+
+  def self.get_restaurant_posts(restaurant)
+    list_item = []
+    var = Restaurant.find_by name: restaurant
+    all = DishPost.all.where restaurant_id: var.id
+    all.each do |post|
+      rest = Restaurant.find_by id: post.restaurant_id
+      user = User.find_by id: post.user_id
+      list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}".green
+    end
+    puts "Posts about #{restaurant}:".green
+    puts list_item
+  end
+
 end
