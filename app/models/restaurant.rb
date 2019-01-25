@@ -4,30 +4,20 @@ class Restaurant < ActiveRecord::Base
 
   def self.new_restaurant
     puts "You're the first person to post about this restaurant! Tell us a little bit about it! (try telling them you posted about them and maybe they'll give you a discount...? *** not guranteed but try ***)".blue
-    puts "Restaurant name:"
-    restaurant_name = gets.chomp
-    if restaurant_name == ""
-      error_message
-    else
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    restaurant_name = prompt.ask("Restaurant name:".blue.bold) do |q|
+      q.required true
     end
-    puts "Cuisine:"
-    my_rest_cuisine = gets.chomp
-    if my_rest_cuisine == ""
-      error_message
-    else
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    my_rest_cuisine = prompt.ask("Cuisine:".blue.bold) do |q|
+      q.required true
     end
-    puts "Location:"
-    my_location = gets.chomp
-    if my_location == ""
-      error_message
-    else
+    prompt = TTY::Prompt.new(active_color: :magenta)
+    my_location = prompt.ask("Location:".blue.bold) do |q|
+      q.required true
     end
     self.create(name: restaurant_name, cuisine: my_rest_cuisine, location: my_location)
-  end
-
-  def self.error_message
-    puts "This field is required. Please try again."
-    new_restaurant
+    puts "Thanks! We've saved this restaurant. Continue with creating your post!".green
   end
 
   def average_restaurant_rating
@@ -86,8 +76,12 @@ class Restaurant < ActiveRecord::Base
     var.each do |rest|
       list_item << "** Restaurant: #{rest.name}, Location: #{rest.location}, Rating: #{rest.average_restaurant_rating}".green
     end
-    puts "Restaurants that serve #{cuisine} food:".green
-    puts list_item
+    if list_item == []
+      puts "There are no posts about restaurants that serve #{cuisine} food yet.".red
+    elsif list_item
+      puts "Restaurants that serve #{cuisine} food:".green
+      puts list_item
+    end
   end
 
   def self.get_restaurant_posts(restaurant)
@@ -99,8 +93,12 @@ class Restaurant < ActiveRecord::Base
       user = User.find_by id: post.user_id
       list_item << "** Restaurant: #{rest.name}, Cuisine: #{rest.cuisine}, Posted About: #{post.name}, Description: #{post.meal_description}, Rating: #{post.rating}, Posted By: #{user.name}".green
     end
-    puts "Posts about #{restaurant}:".green
-    puts list_item
+    if list_item == []
+      puts "There are no posts about #{restaurant} yet.".red
+    elsif  list_item
+      puts "Posts about #{restaurant}:".green
+      puts list_item
+    end
   end
 
 end

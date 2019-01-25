@@ -66,6 +66,8 @@ class CommandLineInterface
 
   def create_new_post
     new_post = DishPost.new_post(@user)
+    grab_rest_instance.new_post
+    binding.pry
     puts "Your post has been saved!".green
     done_with_whatever
   end
@@ -96,7 +98,8 @@ class CommandLineInterface
     elsif user_input == 4
       puts "Enter restaurant:"
       @restaurant = gets.chomp
-      grab_rest_instance.get_restaurant_posts
+      grab_rest_instance
+      Restaurant.get_restaurant_posts(@restaurant)
       done_with_whatever
     elsif user_input == 5
       puts "Enter Restaurant:"
